@@ -2,23 +2,11 @@
 
 import { NgModule } from '@angular/core';
 import { SearchService } from './services/search.service';
-import{ UserService } from './services/user-service';
-import { AlwaysAuthChildrenGuard } from './components/guards/AlwaysAuthChildrenGuard';
-import { AlwaysAuthGuard } from './components/guards/always-auth-guard';
 import { BrowserModule } from '@angular/platform-browser';
-import {
-  RouterModule , 
-  Routes,
-  CanActivate,
-  ActivatedRouteSnapshot, 
-  RouterStateSnapshot
-} from '@angular/router';
+import {RouterModule , Routes} from '@angular/router';
 import {ReactiveFormsModule, FormControl, FormsModule} from '@angular/forms';
 import {JsonpModule, Jsonp, Response} from '@angular/http';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import {OnlyLoggedInUserGuard  } from './components/guards/OnlyLoggedInUserGuard';
-import { UnsearhedTermGuard } from './components/guards/UnsearchedTermGuard';
-
 
 import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
@@ -35,12 +23,10 @@ const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'find', redirectTo: 'search'},
   {path: 'home', component: HomeComponent},
-  {path: 'search', component: SearchComponent, canDeactivate:[UnsearhedTermGuard]},
+  {path: 'search', component: SearchComponent},
   {
     path: 'artist/:artistId',
     component: ArtistComponentComponent,
-   // canActivate: [OnlyLoggedInUserGuard,AlwaysAuthGuard],
-    canActivateChild:[AlwaysAuthChildrenGuard],
     children: [
       {path: '', redirectTo: 'tracks' ,pathMatch: 'full'}, 
       {path: 'tracks', component: ArtistTrackListComponent}, 
@@ -69,14 +55,7 @@ const routes: Routes = [
     ArtistAlbumListComponent
   ],
   bootstrap: [AppComponent],
-  providers: [
-    SearchService,
-    AlwaysAuthGuard,
-    OnlyLoggedInUserGuard,
-    AlwaysAuthChildrenGuard,
-    UnsearhedTermGuard,
-    UserService
-  ]
+  providers: [SearchService]
 })
 export class AppModule { }
 platformBrowserDynamic().bootstrapModule(AppModule);

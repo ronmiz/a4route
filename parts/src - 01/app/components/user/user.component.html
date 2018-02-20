@@ -1,0 +1,18 @@
+<h1>{{ name }}</h1>
+<ul>
+  <li> age :{{ age }}</li>
+  <li>email : {{ email }}</li>
+  <li>Address : {{ address.city}} {{ address.state}} {{ address.street}}</li>
+</ul>
+<form (submit)="addHobbe(hobby.value)">
+  <div>
+    <label for="hobby">hobby:</label>
+    <input type="text" #hobby >
+  </div>
+</form>
+<ul>
+  <li *ngFor="let hobbe of hobbies; let i = index">{{i + 1}}: {{hobbe}}
+    <button (click)="deleteHobby(hobbe)">X</button>
+  </li>
+</ul>
+
